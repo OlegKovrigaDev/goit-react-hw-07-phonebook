@@ -2,12 +2,7 @@ import Filter from './Filter/Filter';
 import ContactList from './ContactList/ContactList';
 import { ContactForm } from './ContactForm/ContactForm';
 
-import { getContacts } from '../redux/selectors';
-import { useSelector } from 'react-redux';
-
-export const App = () => {
-  const contacts = useSelector(getContacts);
-
+const App = () => {
   return (
     <div
       style={{
@@ -23,12 +18,10 @@ export const App = () => {
       <h1>Phonebook</h1>
       <ContactForm />
       <h2>Contacts</h2>
-      {contacts.length > 0 ? (
-        <Filter />
-      ) : (
-        <p>Your phonebook is empty. Add first contact!</p>
-      )}
-      {contacts.length > 0 && <ContactList />}
+      <Filter />
+      <ContactList />
     </div>
   );
 };
+
+export default App;

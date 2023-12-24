@@ -1,17 +1,12 @@
-import React from 'react';
-
-import { nanoid } from '@reduxjs/toolkit';
 import { useSelector, useDispatch } from 'react-redux';
-import { getFilter } from '../../redux/selectors';
-import { changeFilter } from '../../redux/filterSlice';
-
-const filterInputId = nanoid();
+import { selectContacts, selectFilter } from '../../redux/selectors';
+import { setFilter } from '../../redux/filterSlice';
 
 export default function Filter() {
-  const value = useSelector(getFilter);
   const dispatch = useDispatch();
+  const filter = useSelector(selectFilter);
 
-  const onChange = e => dispatch(changeFilter(e.target.value.toLowerCase()));
+  const handleFilterChange = e => dispatch(setFilter(e.target.value.trim()));
 
   return (
     <div>
@@ -19,9 +14,11 @@ export default function Filter() {
         Filter contacts by name:
         <input
           type="text"
-          value={value}
-          onChange={onChange}
-          id={filterInputId}
+          name="filter"
+          placeholder="Search by name"
+          value={filter}
+          onChange={handleFilterChange}
+          disabled={useSelector(selectContacts).length === 0}
         />
       </label>
     </div>
